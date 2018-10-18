@@ -1,0 +1,48 @@
+{
+  "name": "nyco/eligibility-screening-library-php",
+  "description": "A Composer package for interacting with the NYC Opportunity Eligibility API.",
+  "version": "0.0.0",
+  "type": "library",
+  "license": "GPL-3.0+",
+  "authors": [
+    {
+      "name": "NYC Opportunity",
+      "email": "products@nycopportunity.nyc.gov",
+      "homepage": "https://nyc.gov/opportunity"
+    },
+    {
+      "name": "Devon Hirth",
+      "email": "dehirth@nycopportunity.nyc.gov",
+      "homepage": "https://github.com/devowhippit"
+    }
+  ],
+  "require": {
+    "mustangostang/spyc": "^0.6.2",
+    "guzzlehttp/guzzle": "^6.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "nyco\\EligibilityScreeningLibrary\\": "src/"
+    }
+  },
+  "require-dev": {
+    "squizlabs/php_codesniffer": "^3.3"
+  },
+  "scripts": {
+    "ResetPassword": [
+      "php -r 'include \"Tests.php\"; use Tests\\Tests; Tests::resetPassword();'"
+    ],
+    "AuthToken": [
+      "php -r 'include \"Tests.php\"; use Tests\\Tests; Tests::authToken();'"
+    ],
+    "EligibilityPrograms": [
+      "php -r 'include \"Tests.php\"; use Tests\\Tests; Tests::eligibilityPrograms();'"
+    ],
+    "lint": [
+      "vendor/bin/phpcs --standard=phpcs.xml --ignore=vendor/ ."
+    ],
+    "fix": [
+      "vendor/bin/phpcbf --standard=phpcs.xml --ignore=vendor/ ."
+    ]
+  }
+}
