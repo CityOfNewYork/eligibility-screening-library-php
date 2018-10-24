@@ -85,28 +85,42 @@ class EligibilityPrograms {
   );
 
   /**
+   * The class constructor
+   */
+  function __construct() {
+    // Instantiate dependencies
+    $this->client = new Client();
+    $this->config = new Config();
+
+    // Set file path for dependencies
+    $this->config->path = $this->path;
+
+    // Set variables needed from other methods
+    $this->username = $this->config->credentials('USERNAME');
+    $this->domain = $this->config->get('DOMAIN');
+  }
+
+  /**
    * Uses the Guzzle REST Client to post a request to get programs from the
    * Eligibility Open API. See http://docs.guzzlephp.org for Guzzle Reference.
    * @param  string(json)  $data  The data to send as the body of the request.
    * @return array                The eligible programs based on the data.
    */
-  public function fetch() {
-    $client = new Client();
-    $authToken = new AuthToken();
-    $config = new Config();
-    $authToken->path = $this->path;
-    $config->path = $this->path;
+  public function fetch($token = false, $data = false) {
+    $token = ($token) ? $token : $this->token;
+    $data = ($data) ? $data : $this->data;
 
-    $token = $authToken->fetch()['token'];
-    $endpoint = $config->get('DOMAIN') . $this->endpoint();
+    if (!$token) return 'A valid token is required.';
 
-    $response = $client->request('POST', $endpoint, array(
+    $endpoint = $this->domain . $this->endpoint();
+
+    $response = $this->client->request('POST', $endpoint, array(
       'headers' => [
         'Content-Type' => 'application/json',
-        'username' => 'dehirth',
+        'username' => $this->username,
         'Authorization' => $token
       ],
-      'body' => json_encode($this->data),
+      'body' => json_encode($data),
       'debug' => $this->debug
     ));
 

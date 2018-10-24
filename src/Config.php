@@ -31,4 +31,19 @@ class Config {
       return $config;
     }
   }
+
+  /**
+   * Load credentials from the auth.yml file
+   * @return array Containing username and password
+   */
+  public function credentials($key = false, $path = 'auth.yml') {
+    $path = $this->path . $path;
+    $credentials = Spyc::YAMLLoad($path);
+
+    if ($key) {
+      return $credentials[$key];
+    } else {
+      return $credentials;
+    }
+  }
 }

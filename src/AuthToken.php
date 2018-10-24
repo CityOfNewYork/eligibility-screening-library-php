@@ -12,6 +12,11 @@ use Spyc;
 
 class AuthToken {
   /**
+   * Constants
+   */
+  const EXPIRES = 3600;
+
+  /**
    * Variables
    */
 
@@ -22,26 +27,38 @@ class AuthToken {
   var $path = './';
 
   /**
+   * The class constructor
+   */
+  function __construct() {
+    // Instantiate dependencies
+    $this->client = new Client();
+    $this->config = new Config();
+
+    // Set file path for dependencies
+    $this->config->path = $this->path;
+
+    // Set variables needed from other methods
+    $this->credentials = $credentials = self::credentials();
+    $this->domain = $this->config->get('DOMAIN');
+  }
+
+  /**
    * Method for resetting password from temporary to new
    * @param  boolean $debug Debug param for the Guzzle Request method http://docs.guzzlephp.org/en/stable/request-options.html#debug
    * @return array          The response object from the Auth endpoint.
    */
   public function resetPassword() {
-    $client = new Client();
-    $config = new Config();
-    $config->path = $this->path;
-
-    $credentials = self::credentials();
-    $endpoint = $config->get('DOMAIN') . self::ENDPOINT;
-
-    $response = $client->request('POST', $endpoint, array(
+    $endpoint = $this->config->get('DOMAIN') . $this->endpoint();
+    $response = $this->client->request('POST', $endpoint, array(
       'json' => [
-        'username' => $credentials['USERNAME'],
-        'password' => $credentials['TEMPORARY_PASSWORD'],
-        'newPassword' => $credentials['PASSWORD']
+        'username' => $this->credentials['USERNAME'],
+        'password' => $this->credentials['TEMPORARY_PASSWORD'],
+        'newPassword' => $this->credentials['PASSWORD']
       ],
       'debug' => $this->debug
     ));
+
+    $this->expires = $this->expires();
 
     return json_decode($response->getBody(), true);
   }
@@ -54,22 +71,27 @@ class AuthToken {
    * @return array          The response object from the Auth endpoint.
    */
   public function fetch() {
-    $client = new Client();
-    $config = new Config();
-    $config->path = $this->path;
+    $endpoint = $this->config->get('DOMAIN') . $this->endpoint();
 
-    $credentials = $this->credentials();
-    $endpoint = $config->get('DOMAIN') . $this->endpoint();
-
-    $response = $client->request('POST', $endpoint, array(
+    $response = $this->client->request('POST', $endpoint, array(
       'json' => [
-        'username' => $credentials['USERNAME'],
-        'password' => $credentials['PASSWORD']
+        'username' => $this->credentials['USERNAME'],
+        'password' => $this->credentials['PASSWORD']
       ],
       'debug' => $this->debug
     ));
 
+    $this->expires = $this->expires();
+
     return json_decode($response->getBody(), true);
+  }
+
+  /**
+   * Get the expiry for this moment in time.
+   * @return [number] current time since the Unix Epoch in seconds + expiry time
+   */
+  private function expires() {
+    return time() + self::EXPIRES;
   }
 
   /**
