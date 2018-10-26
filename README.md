@@ -66,11 +66,19 @@ There are two steps to making a request which includes 1) getting a token and 2)
 
 #### 1. Authentication
 
-This should be the first step of your application's process to get a token.
+This should be the first step of your application's process to get a token. To start, we instantiate the AuthToken method;
 
     $authToken = new AuthToken;
 
-Set the path to the `auth.yml` file where your username and password is stored. By default, it is set to `./` but we are setting it here for demonstration purposes.
+Set your username and password in the `auth.yml` file.
+
+    USERNAME: yourusername
+    PASSWORD: 'yourpassword'
+    TEMPORARY_PASSWORD: 'yourtemporarypassword'
+
+Note: If you haven't reset your temporary password yet, you can run `composer run ResetPassword` to do that.
+
+Set the path to the `auth.yml` file in the `AuthToken` instance where your username and password is stored. By default, it is set to `./` but we are setting it here for demonstration purposes.
 
     $authToken->path = './';
 
