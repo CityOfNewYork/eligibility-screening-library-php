@@ -143,6 +143,12 @@ Uses a CSV with submission data to fetch bulk requests from the Bulk Submission 
 
 Path as a string that references where the `auth.yml` is. By default it is set to `./`.
 
+##### BulkSubmission username (string)
+
+    $endpoint->username = 'yourusername'
+
+Optional. If you do not want to use the default credential storage in the `auth.yml` file (perhaps in a database or environmental variable), the username can be set to this variable.
+
 ##### BulkSubmission save (string)
 
     $endpoint->save = './sample_response_data.csv';
