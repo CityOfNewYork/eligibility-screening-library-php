@@ -1,7 +1,7 @@
 {
   "name": "nyco/eligibility-screening-library-php",
   "description": "A Composer package for interacting with the NYC Opportunity Eligibility API.",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "library",
   "license": "GPL-3.0+",
   "authors": [
@@ -37,6 +37,15 @@
     ],
     "EligibilityPrograms": [
       "php -r 'include \"Tests.php\"; use Tests\\Tests; Tests::eligibilityPrograms();'"
+    ],
+    "BulkSubmissionFile": [
+      "php -r 'include \"Tests.php\"; use Tests\\Tests; Tests::bulkSubmission(true);'"
+    ],
+    "BulkSubmissionArray": [
+      "php -r 'include \"Tests.php\"; use Tests\\Tests; Tests::bulkSubmission();'"
+    ],
+    "BulkSubmissionPrograms": [
+      "php -r 'include \"Tests.php\"; use Tests\\Tests; Tests::bulkSubmission(false, [\"S2R006\", \"S2R019\"]);'"
     ],
     "lint": [
       "vendor/bin/phpcs --standard=phpcs.xml --ignore=vendor/ ."

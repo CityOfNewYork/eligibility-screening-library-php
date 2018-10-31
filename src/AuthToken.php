@@ -14,6 +14,8 @@ class AuthToken {
   /**
    * Constants
    */
+
+  /** @const number The expiration of the token in seconds. */
   const EXPIRES = 3600;
 
   /**
@@ -84,6 +86,16 @@ class AuthToken {
     $this->expires = $this->expires();
 
     return json_decode($response->getBody(), true);
+  }
+
+  /**
+   * [token description]
+   * @param  [type] $token [description]
+   * @return [type]        [description]
+   */
+  public function fresh($token) {
+    return (time() >= $this->expires)
+      ? $this->fetch()['token'] : $token;
   }
 
   /**
