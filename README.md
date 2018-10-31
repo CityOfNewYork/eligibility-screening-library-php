@@ -20,7 +20,7 @@ Your concerned files should require each class individually.
 
     use nyco\EligibilityScreeningLibrary\<class> as <class>;
 
-The Composer autoloader do the actual `require` when your script runs and calls each class.
+The Composer autoloader will do the actual `require` when your script runs and calls each class.
 
 ### Classes
 
@@ -39,19 +39,19 @@ To test this in the current package run `composer run AuthToken`.
 
     $endpoint->path = './';
 
-Required. Path as a string that references where the `auth.yml` is. By default it is set to `./`.
+Optional. Path as a string that references where the `auth.yml` is. By default it is set to `./`.
 
 ##### AuthToken username (string)
 
     $endpoint->username = 'yourusername'
 
-Required. If you do not want to use the default credential storage in the `auth.yml` file (perhaps in a database or environmental variable), the username can be set to this variable.
+Optional. If you do not want to use the default credential storage in the `auth.yml` file (perhaps in a database or environmental variable), the username can be set to this variable.
 
 ##### AuthToken password (string)
 
     $endpoint->password = 'yourpassword'
 
-Required. If you do not want to use the default credential storage in the `auth.yml` file (perhaps in a database or environmental variable), the password can be set to this variable.
+Optional. If you do not want to use the default credential storage in the `auth.yml` file (perhaps in a database or environmental variable), the password can be set to this variable.
 
 ##### AuthToken resetPassword (function)
 
@@ -93,13 +93,13 @@ Returns Eligible Programs based on submission data as a PHP array. Requires a to
 
     $endpoint->path = './';
 
-Required. Path as a string that references where the `auth.yml` is. By default it is set to `./`.
+Optional. Path as a string that references where the `auth.yml` is. By default it is set to `./`.
 
 ##### EligibilityPrograms username (string)
 
     $endpoint->username = 'yourusername'
 
-Required. If you do not want to use the default credential storage in the `auth.yml` file (perhaps in a database or environmental variable), the username can be set to this variable.
+Optional. If you do not want to use the default credential storage in the `auth.yml` file (perhaps in a database or environmental variable), the username can be set to this variable.
 
 ##### EligibilityPrograms token (string)
 
